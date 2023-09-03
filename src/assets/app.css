@@ -10,6 +10,11 @@ p {
   font-size: 1em;
 }
 
+a {
+  text-decoration: inherit;
+  color: inherit;
+}
+
 .page {
   padding: 1em;
 }

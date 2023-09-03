@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import '../../assets/app.css';
 import { tripDateString } from '../../utils';
 
@@ -36,10 +38,12 @@ function Home() {
 
           <div className="trips-container">
             {trips.map((trip, index) =>
-              <div className="trip-card">
-                <div className="trip-title">{trip.title}</div>
-                <div className="trip-dates">{tripDateString(trip)}</div>
-              </div>
+              <Link to="/trip">
+                <div className="trip-card">
+                  <div className="trip-title">{trip.title}</div>
+                  <div className="trip-dates">{tripDateString(trip)}</div>
+                </div>
+              </Link>
             )}
           </div>
         </div>
