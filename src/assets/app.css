@@ -1,0 +1,43 @@
+h1 {
+  font-size: 1.6em;
+}
+
+h2 {
+  font-size: 1.25em;
+}
+
+p {
+  font-size: 1em;
+}
+
+a {
+  text-decoration: inherit;
+  color: inherit;
+}
+
+.page {
+  padding: 1em;
+}
+
+.home {
+  padding-top: 1.5em;
+}
+
+.trip-card {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.trip-title {
+  font-weight: bold;
+  font-size: 1em;
+  margin-bottom: 0.4em;
+}
+
+.trip-dates {
+  font-size: 1em;
+}
+
+.home {
+  
+}
