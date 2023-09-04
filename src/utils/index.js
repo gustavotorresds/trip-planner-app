@@ -7,6 +7,10 @@ export const ItineraryType = {
   LodgingCheckout: 3,
 }
 
+export const tripTitle = ({ title }) => {
+  return title;
+}
+
 export const tripDateString = ({ startDate, endDate }) => {
   const startDateJS = new Date(startDate);
   const endDateJS = new Date(endDate);
@@ -25,7 +29,7 @@ export const tripDateString = ({ startDate, endDate }) => {
     return `${startMonth} ${startDay} - ${endMonth} ${endDay}, ${startYear}`
   }
 
-  return `${startMonth} ${startDay} - ${endDay}, ${startYear}`
+  return `${startMonth} ${startDay} - ${endDay}, ${startYear}`;
 }
 
 export const numberOfPeopleString = ({ numberOfPeople }) => {
@@ -49,7 +53,7 @@ export const dayItineraryDate = ({ startDate, endDate, itinerary,}, idx) => {
   const itineraryMonth = itineraryDateJS.toLocaleString('default', { month: 'short' });
   const itineraryYear = itineraryDateJS.getFullYear();
 
-  return `${itineraryMonth} ${itineraryDay}`
+  return `${itineraryMonth} ${itineraryDay}`;
 }
 
 export const itineraryItemSummaryDescription = ({ itineraryType, description}) => {
@@ -69,5 +73,5 @@ export const itineraryItemSummaryDescription = ({ itineraryType, description}) =
       type = 'Check-out';
   }
 
-  return `${type}: ${description}`
+  return `${type}: ${description}`;
 }

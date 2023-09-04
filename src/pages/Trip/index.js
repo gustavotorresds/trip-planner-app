@@ -1,6 +1,11 @@
 import '../../assets/app.css';
+
+import { useTrips } from '../../context/TripsContext.js';
 import {
-  ItineraryType,
+  useParams
+} from 'react-router-dom';
+import {
+  tripTitle,
   tripDateString,
   destinationCitiesString,
   numberOfPeopleString,
@@ -8,41 +13,16 @@ import {
   itineraryItemSummaryDescription,
 } from '../../utils';
 
-const trip = {
-      title: 'A week with family in Brazil',
-      startDate: '2023-08-20',
-      endDate: '2023-11-20',
-      cityFrom: 'San Francisco',
-      destinationCities: [
-          { city: 'São Paulo', numberOfDays: 4 },
-          { city: 'Rio de Janeiro', numberOfDays: 3 }
-      ],
-      numberOfPeople: 1,
-      itinerary: [
-        [
-          {
-            itineraryType: ItineraryType['Flight'],
-            description: 'GRU to MIA with United Airlines'
-          },
-        ],
-        [
-          {
-            itineraryType: ItineraryType['LodgingCheckin'],
-            description: 'Residence Inn'
-          },
-          {
-            itineraryType: ItineraryType['Activity'],
-            description: 'Sunset at the bay'
-          },
-        ],
-      ],
-    };
-
 function Trip() {
+  const { tripId, } = useParams();
+  const { trips, } = useTrips();
+  
+  const trip = trips.find(({ id }) => id == tripId);
+
   return (
       <div className="trip">
         <div className="header">
-        A week with family in Brazil
+        { tripTitle(trip) }
         </div>
 
         <div className="page">
