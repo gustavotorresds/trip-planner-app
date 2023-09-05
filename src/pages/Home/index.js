@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import '../../assets/app.css';
 import { useTrips } from '../../context/TripsContext.js';
-import { tripDateString } from '../../utils';
+import { tripTitle, tripDateString } from '../../utils';
 
 function Home() {
   const { trips, } = useTrips();
@@ -16,9 +16,9 @@ function Home() {
 
           <div className="trips-container">
             {trips.map((trip, index) =>
-              <Link to={`/trip/${trip.id}`}>
+              <Link to={`/trip/${trip.id}`} key={`trip-${index}`}>
                 <div className="trip-card">
-                  <div className="trip-title">{trip.title}</div>
+                  <div className="trip-title">{tripTitle(trip)}</div>
                   <div className="trip-dates">{tripDateString(trip)}</div>
                 </div>
               </Link>

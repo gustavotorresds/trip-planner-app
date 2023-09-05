@@ -57,17 +57,17 @@ export function TripsProvider({ children }) {
         [
           {
             itineraryType: ItineraryType['Flight'],
-            description: 'GRU to MIA with United Airlines'
+            description: 'SFO to GRU with United Airlines'
           },
         ],
         [
           {
             itineraryType: ItineraryType['LodgingCheckin'],
-            description: 'Residence Inn'
+            description: 'Sheraton'
           },
           {
             itineraryType: ItineraryType['Activity'],
-            description: 'Sunset at the bay'
+            description: 'Feijoada at Sujinho'
           },
         ],
       ],
