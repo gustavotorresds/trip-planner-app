@@ -5,9 +5,7 @@ import {
   useParams
 } from 'react-router-dom';
 
-import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
 
 import { useTrips } from '../../context/TripsContext.js';
 import {
@@ -19,38 +17,52 @@ import {
   itineraryItemSummaryDescription,
 } from '../../utils';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+const allCities = ['New York', 'San Francisco', 'Sao Paulo', 'Rio de Janeiro', 'Paris', 'Amsterdam', 'Salvador', 'Miami'];
 
-const cityOptions = ['New York', 'San Francisco', 'Sao Paulo', 'Rio de Janeiro'];
+const CityPicker = ({ initialCity, cityOptions, onCityPicked, isNewCity=false }) => {
+  // TODO: should deal w the case when the user ends up picking nothing. The city should then reset to initialCity
 
-function SearchModal() {
-  const [origin, setOrigin] = useState('');
-  const [destinations, setDestinations] = useState(['RJ', 'SP']);
-  const [isOriginSelected, setIsOriginSelected] = useState(true); // Used to control whether options are displayed
+  const [cityPick, setCityPick] = useState(initialCity);
+  const [isPicked, setIsPicked] = useState(true); // Used to control whether options are displayed
+
+  return (<div className="destination-container">
+    <input
+      className="text-input"
+      type="text"
+      placeholder="Choose a destination"
+      value={cityPick}
+      onChange={(event) => {
+        setCityPick(event.target.value);
+        setIsPicked(false);
+      }}
+    />
+
+    {(cityPick.length > 1 && !isPicked) &&
+        (<div className="city-options">
+          {cityOptions
+            .filter((cityOption) => cityOption.toLowerCase().startsWith(cityPick.toLowerCase()))
+            .map((cityOption, cityIdx) =>
+              <div key={`city-option-${cityIdx}`} className="city-option" onClick={() => {
+                setCityPick(cityOption);
+                setIsPicked(true);
+                onCityPicked(cityOption);
+
+                if (isNewCity) {
+                  setCityPick("");
+                }
+              }}>
+                {cityOption}
+              </div>
+            )}
+        </div>)
+      }
+  </div>);
+}
+
+function SearchModal({ trip, }) {
+  const [origin, setOrigin] = useState(trip.cityFrom);
+  const [destinations, setDestinations] = useState(trip.destinationCities.map(c => c.city));
   // TODO: figure out context/satte flow for this
-
-  const updateOrigin = (event) => {
-    setOrigin(event.target.value);
-    setIsOriginSelected(false);
-  }
-
-  const updateDestinations = (event, idx) => {
-    setDestinations([
-      ...destinations.slice(0, idx),
-      event.target.value,
-      ...destinations.slice(idx + 1),
-    ]);
-  }
 
   return (
     <div className="filters-container">
@@ -59,28 +71,14 @@ function SearchModal() {
         Where from?
         </div>
 
-        <input
-          class="text-input"
-          type="text"
-          placeholder="Type something..."
-          value={origin}
-          onChange={updateOrigin}
+        <CityPicker
+          key={`origin-picker`}
+          initialCity={origin}
+          cityOptions={allCities}
+          onCityPicked={(cityPicked) => {
+            setOrigin(cityPicked);
+          }}
         />
-
-        {(origin.length > 1 && !isOriginSelected) &&
-          (<div className="city-options">
-            {cityOptions
-              .filter((city) => city.toLowerCase().startsWith(origin.toLowerCase()))
-              .map((city, cityIdx) =>
-                <div className="city-option" onClick={() => {
-                  setOrigin(city);
-                  setIsOriginSelected(true);
-                }}>
-                  {city}
-                </div>
-              )}
-          </div>)
-        }
       </div>
 
       <div className="filter-option">
@@ -89,34 +87,31 @@ function SearchModal() {
         </div>
 
         {destinations.map((destination, idx) =>
-          <div className="destination-container">
-            <input
-              class="text-input"
-              type="text"
-              placeholder="Type something..."
-              value={destination}
-              onChange={(event) => updateDestinations(event, idx)}
-            />
-
-            {(destination.length > 1) &&
-              (<div className="city-options">
-                {cityOptions
-                  .filter((city) => city.toLowerCase().startsWith(destination.toLowerCase()))
-                  .map((city, cityIdx) =>
-                      <div className="city-option" onClick={() => {
-                        setDestinations([
-                          ...destinations.slice(0, idx),
-                          city,
-                          ...destinations.slice(idx + 1),
-                        ]);
-                      }}>
-                        {city}
-                      </div>)}
-              </div>)
-            }
-
-          </div>
+          <CityPicker
+            key={`destination-picker-${idx}`}
+            initialCity={destination}
+            cityOptions={allCities.filter(c => c !== origin)}
+            onCityPicked={(cityPicked) => {
+              setDestinations([
+                ...destinations.slice(0, idx),
+                cityPicked,
+                ...destinations.slice(idx + 1),
+              ]);
+            }}
+          />
         )}
+
+        <CityPicker
+          initialCity={''}
+          cityOptions={allCities.filter(c => c !== origin)}
+          onCityPicked={(cityPicked) => {
+            setDestinations([
+              ...destinations,
+              cityPicked,
+            ]);
+          }}
+          isNewCity={true}
+        />
       </div>
     </div>
     );
@@ -152,7 +147,9 @@ function Trip() {
                 justifyContent: 'center',
                 alignItems: 'center'}}
           >
-            <SearchModal/>
+            <>
+              <SearchModal trip={trip} />
+            </>
           </Modal>
 
           <div className="overall-itinerary">
