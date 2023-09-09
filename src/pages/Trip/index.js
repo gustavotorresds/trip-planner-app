@@ -5,7 +5,9 @@ import {
   useParams
 } from 'react-router-dom';
 
-import Modal from '@mui/material/Modal';
+import Dialog from '@mui/material/Dialog';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 import { useTrips } from '../../context/TripsContext.js';
 import {
@@ -59,13 +61,18 @@ const CityPicker = ({ initialCity, cityOptions, onCityPicked, isNewCity=false })
   </div>);
 }
 
-function SearchModal({ trip, }) {
+function SearchModal({ trip, onClose }) {
   const [origin, setOrigin] = useState(trip.cityFrom);
   const [destinations, setDestinations] = useState(trip.destinationCities.map(c => c.city));
   // TODO: figure out context/satte flow for this
 
   return (
     <div className="filters-container">
+      <div className="filters-header">
+        <IconButton onClick={onClose} size="large">
+          <CloseIcon />
+        </IconButton>
+      </div>
       <div className="filter-option">
         <div className="filter-title">
         Where from?
@@ -86,16 +93,16 @@ function SearchModal({ trip, }) {
         Where to?
         </div>
 
-        {destinations.map((destination, idx) =>
+        {destinations.map((destination, destinationIdx) =>
           <CityPicker
-            key={`destination-picker-${idx}`}
+            key={`destination-picker-${destinationIdx}`}
             initialCity={destination}
             cityOptions={allCities.filter(c => c !== origin)}
             onCityPicked={(cityPicked) => {
               setDestinations([
-                ...destinations.slice(0, idx),
+                ...destinations.slice(0, destinationIdx),
                 cityPicked,
-                ...destinations.slice(idx + 1),
+                ...destinations.slice(destinationIdx + 1),
               ]);
             }}
           />
@@ -112,6 +119,24 @@ function SearchModal({ trip, }) {
           }}
           isNewCity={true}
         />
+      </div>
+
+      <div className="filter-option">
+        <div className="filter-title">
+        When?
+        </div>
+      </div>
+
+      <div className="filter-option">
+        <div className="filter-title">
+        Who?
+        </div>
+      </div>
+
+      <div className="filter-option">
+        <div className="filter-title">
+        Days at each destination?
+        </div>
       </div>
     </div>
     );
@@ -138,30 +163,27 @@ function Trip() {
             {destinationCitiesString(trip)} • {tripDateString(trip)} • {numberOfPeopleString(trip)}
           </div>
 
-          <Modal
+          <Dialog
+            fullScreen
             open={open}
             onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-            sx={{display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'}}
+            scroll="body"
           >
             <>
-              <SearchModal trip={trip} />
+              <SearchModal trip={trip} onClose={handleClose} />
             </>
-          </Modal>
+          </Dialog>
 
           <div className="overall-itinerary">
-            {trip.itinerary.map((dayItinerary, idx) =>
-              <div className="day-itinerary" key={`day-${idx}`}>
+            {trip.itinerary.map((dayItinerary, dayIdx) =>
+              <div className="day-itinerary" key={`day-${dayIdx}`}>
                 <div className="date">
-                {dayItineraryDate(trip, idx)}
+                {dayItineraryDate(trip, dayIdx)}
                 </div>
 
                 <div className="day-itinerary-items">
-                  {dayItinerary.map((itineraryItem, idx2) =>
-                    <div className="day-itinerary-item" key={`day-${idx}-item-${idx2}`}>
+                  {dayItinerary.map((itineraryItem, itineraryItemIdx) =>
+                    <div className="day-itinerary-item" key={`day-${dayIdx}-item-${itineraryItemIdx}`}>
                       {itineraryItemSummaryDescription(itineraryItem)}
                     </div>
                   )}
