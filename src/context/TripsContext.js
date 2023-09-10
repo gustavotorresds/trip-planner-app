@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
 import {
   ItineraryType,
@@ -7,73 +8,32 @@ import {
 const TripsContext = createContext();
 
 export function useTrips() {
-  return useContext(TripsContext);
+  const context = useContext(TripsContext);
+
+  if (context ===  undefined) {
+    throw new Error("Context must be used within a Provider");
+  }
+
+  return context;
 }
 
 export function TripsProvider({ children }) {
-  const [trips, setTrips] = useState([
-    {
-      id: 1,
-      title: 'A week with family in the U.S.',
-      startDate: '2023-08-20',
-      cityFrom: 'Sao Paulo',
-      destinations: [
-          { city: 'Miami', numberOfDays: 4 },
-          { city: 'San Francisco', numberOfDays: 3 }
-      ],
-      numberOfPeople: 4,
-      itinerary: [
-        [
-          {
-            itineraryType: ItineraryType['Flight'],
-            description: 'GRU to MIA with United Airlines'
-          },
-        ],
-        [
-          {
-            itineraryType: ItineraryType['LodgingCheckin'],
-            description: 'Residence Inn'
-          },
-          {
-            itineraryType: ItineraryType['Activity'],
-            description: 'Sunset at the bay'
-          },
-        ],
-      ],
-    },
-    {
-      id: 2,
-      title: 'A week with family in Brazil',
-      startDate: '2023-09-15',
-      cityFrom: 'San Francisco',
-      destinations: [
-          { city: 'Sao Paulo', numberOfDays: 10 },
-          { city: 'Rio de Janeiro', numberOfDays: 10 }
-      ],
-      numberOfPeople: 1,
-      itinerary: [
-        [
-          {
-            itineraryType: ItineraryType['Flight'],
-            description: 'SFO to GRU with United Airlines'
-          },
-        ],
-        [
-          {
-            itineraryType: ItineraryType['LodgingCheckin'],
-            description: 'Sheraton'
-          },
-          {
-            itineraryType: ItineraryType['Activity'],
-            description: 'Feijoada at Sujinho'
-          },
-        ],
-      ],
-    },
-  ]);
+  const [trips, setTrips] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let url = 'http://localhost:5050/api/trips';
+    axios
+      .get(url)
+      .then((response) => {
+        setTrips(response.data);
+        setIsLoading(false);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
-    <TripsContext.Provider value={{ trips, }}>
+    <TripsContext.Provider value={{ trips, isLoading}}>
       {children}
     </TripsContext.Provider>
   );

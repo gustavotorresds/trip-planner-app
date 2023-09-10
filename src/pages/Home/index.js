@@ -5,7 +5,7 @@ import { useTrips } from '../../context/TripsContext.js';
 import { tripTitle, tripDateString } from '../../utils';
 
 function Home() {
-  const { trips, } = useTrips();
+  const { trips, isLoading } = useTrips();
 
   return (
       <div className="page home">
@@ -15,8 +15,11 @@ function Home() {
           <h2>Upcoming</h2>
 
           <div className="trips-container">
-            {trips.map((trip, index) =>
-              <Link to={`/trip/${trip.id}`} key={`trip-${index}`}>
+            {!!isLoading ?
+              <div>Loading...</div>
+              :
+              trips.map((trip, index) =>
+              <Link to={`/trip/${trip._id}`} key={`trip-${index}`}>
                 <div className="trip-card">
                   <div className="trip-title">{tripTitle(trip)}</div>
                   <div className="trip-dates">{tripDateString(trip)}</div>
