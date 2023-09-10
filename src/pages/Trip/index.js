@@ -197,54 +197,61 @@ function SearchModal({ trip, onClose }) {
 
 function Trip() {
   const { tripId, } = useParams();
-  const { trips, } = useTrips();
+  const { trips, isLoading } = useTrips();
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   
-  const trip = trips.find(({ id }) => id == tripId);
+  const trip = trips.find(({ _id }) => _id === tripId);
 
   return (
       <div className="trip">
-        <div className="header">
-        { tripTitle(trip) }
-        </div>
+        {
+          !!isLoading ?
+          <div>Loading...</div>
+          :
+          <>
+            <div className="header">
+            { tripTitle(trip) }
+            </div>
 
-        <div className="page">
-          <div className="query-summary" onClick={handleOpen}>
-            {destinationCitiesString(trip)} • {tripDateString(trip)} • {numberOfPeopleString(trip)}
-          </div>
-
-          <Dialog
-            fullScreen
-            open={open}
-            onClose={handleClose}
-            scroll="body"
-          >
-            <>
-              <SearchModal trip={trip} onClose={handleClose} />
-            </>
-          </Dialog>
-
-          <div className="overall-itinerary">
-            {trip.itinerary.map((dayItinerary, dayIdx) =>
-              <div className="day-itinerary" key={`day-${dayIdx}`}>
-                <div className="date">
-                {dayItineraryDate(trip, dayIdx)}
-                </div>
-
-                <div className="day-itinerary-items">
-                  {dayItinerary.map((itineraryItem, itineraryItemIdx) =>
-                    <div className="day-itinerary-item" key={`day-${dayIdx}-item-${itineraryItemIdx}`}>
-                      {itineraryItemSummaryDescription(itineraryItem)}
-                    </div>
-                  )}
-                </div>
+            <div className="page">
+              <div className="query-summary" onClick={handleOpen}>
+                {destinationCitiesString(trip)} • {tripDateString(trip)} • {numberOfPeopleString(trip)}
               </div>
-            )}
-          </div>
-        </div>
+
+              <Dialog
+                fullScreen
+                open={open}
+                onClose={handleClose}
+                scroll="body"
+              >
+                <>
+                  <SearchModal trip={trip} onClose={handleClose} />
+                </>
+              </Dialog>
+
+              <div className="overall-itinerary">
+                {trip.itinerary.map((dayItinerary, dayIdx) =>
+                  <div className="day-itinerary" key={`day-${dayIdx}`}>
+                    <div className="date">
+                    {dayItineraryDate(trip, dayIdx)}
+                    </div>
+
+                    <div className="day-itinerary-items">
+                      {dayItinerary.map((itineraryItem, itineraryItemIdx) =>
+                        <div className="day-itinerary-item" key={`day-${dayIdx}-item-${itineraryItemIdx}`}>
+                          {itineraryItemSummaryDescription(itineraryItem)}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </>
+        }
       </div>
   );
 }
