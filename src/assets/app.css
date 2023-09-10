@@ -48,7 +48,7 @@ a {
 }
 
 .trip .query-summary {
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   padding: 1em;
   font-size: 0.8em;
 }
@@ -71,3 +71,113 @@ a {
   padding: 0.5em 0;
 }
 
+.filters-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: scroll;
+  padding: 2em 2em;
+  padding-bottom: 10em;
+}
+
+.filters-header {
+  justify-content: left;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+/* Style the modal content */
+.filter-option {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  width: 90%;
+  padding: 1.5em 1em;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 0.5em;
+  text-align: left;
+  outline: none; /* Remove the default focus outline */
+  margin-bottom: 1em;
+}
+
+.filter-title {
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+/* Style the text box */
+.text-input {
+  margin-top: 1.2em;
+  padding: 1em;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none; /* Remove the default focus outline */
+  transition: border-color 0.3s ease-in-out;
+}
+
+/* Add a hover effect */
+.text-input:hover {
+  border-color: #666;
+}
+
+/* Add a focus effect */
+.text-input:focus {
+  border-color: #007bff;
+}
+
+.city-options {
+  
+}
+
+.city-option {
+  padding: 1em 0.3em;
+}
+
+.city-option:hover {
+  background-color: #f2f2f2;
+}
+
+.destination-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.date-container {
+  width: 100%;
+  margin: 0.5em 0;
+}
+
+.date-header {
+  font-size: 1em;
+  margin-bottom: 0.5em;
+}
+
+.no-days-container {
+  width: 100%;
+}
+
+.individual-no-days-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1em 0;
+}
+
+.no-days-city {
+  flex: 1;
+  font-size: 1em;
+}
+
+.no-days-number-container {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: right;
+}
+
+.no-days-number {
+  padding: 0 1em;
+}
