@@ -150,7 +150,7 @@ function SearchModal({ trip, onClose }) {
 
         <div className="no-days-container">
           {destinations.map((destination, destinationIdx) =>
-              <div className="individual-no-days-container">
+              <div key={`number-of-days-${destinationIdx}`} className="individual-no-days-container">
                 <div className="no-days-city">
                 {destination.city}
                 </div>

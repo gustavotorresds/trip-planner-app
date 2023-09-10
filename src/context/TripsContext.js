@@ -16,7 +16,6 @@ export function TripsProvider({ children }) {
       id: 1,
       title: 'A week with family in the U.S.',
       startDate: '2023-08-20',
-      endDate: '2023-08-27',
       cityFrom: 'Sao Paulo',
       destinations: [
           { city: 'Miami', numberOfDays: 4 },
@@ -45,12 +44,11 @@ export function TripsProvider({ children }) {
     {
       id: 2,
       title: 'A week with family in Brazil',
-      startDate: '2023-08-20',
-      endDate: '2023-11-20',
+      startDate: '2023-09-15',
       cityFrom: 'San Francisco',
       destinations: [
-          { city: 'Sao Paulo', numberOfDays: 4 },
-          { city: 'Rio de Janeiro', numberOfDays: 3 }
+          { city: 'Sao Paulo', numberOfDays: 10 },
+          { city: 'Rio de Janeiro', numberOfDays: 10 }
       ],
       numberOfPeople: 1,
       itinerary: [

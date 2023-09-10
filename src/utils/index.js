@@ -11,9 +11,16 @@ export const tripTitle = ({ title }) => {
   return title;
 }
 
-export const tripDateString = ({ startDate, endDate }) => {
+export const tripDateString = ({ startDate, destinations }) => {
   const startDateJS = new Date(startDate);
-  const endDateJS = new Date(endDate);
+
+  let numberOfDays = 0;
+  for (let destination of destinations) {
+    numberOfDays += destination.numberOfDays;
+  }
+
+  const endDateJS = new Date(startDate);
+  endDateJS.setDate(startDateJS.getDate() + numberOfDays);
 
   const startDay = startDateJS.getDate();
   const startMonth = startDateJS.toLocaleString('default', { month: 'short' });
@@ -44,7 +51,7 @@ export const cityFromString = ({ cityFrom }) => {
   return cityFrom;
 }
 
-export const dayItineraryDate = ({ startDate, endDate, itinerary,}, idx) => {
+export const dayItineraryDate = ({ startDate, itinerary,}, idx) => {
   const itineraryDateJS = new Date(startDate);
   itineraryDateJS.setDate(itineraryDateJS.getDate() + idx);
   // const endDateJS = new Date(endDate); // TODO: use it in edge case scenarios
