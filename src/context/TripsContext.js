@@ -49,7 +49,7 @@ export function TripsProvider({ children }) {
       endDate: '2023-11-20',
       cityFrom: 'San Francisco',
       destinationCities: [
-          { city: 'São Paulo', numberOfDays: 4 },
+          { city: 'Sao Paulo', numberOfDays: 4 },
           { city: 'Rio de Janeiro', numberOfDays: 3 }
       ],
       numberOfPeople: 1,

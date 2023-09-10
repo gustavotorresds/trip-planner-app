@@ -8,6 +8,8 @@ import {
 import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
 
 import { useTrips } from '../../context/TripsContext.js';
 import {
@@ -64,6 +66,8 @@ const CityPicker = ({ initialCity, cityOptions, onCityPicked, isNewCity=false })
 function SearchModal({ trip, onClose }) {
   const [origin, setOrigin] = useState(trip.cityFrom);
   const [destinations, setDestinations] = useState(trip.destinationCities.map(c => c.city));
+  const [startDate, setStartDate] = useState(trip.startDate);
+  const [endDate, setEndDate] = useState(trip.endDate);
   // TODO: figure out context/satte flow for this
 
   return (
@@ -125,11 +129,25 @@ function SearchModal({ trip, onClose }) {
         <div className="filter-title">
         When?
         </div>
-      </div>
 
-      <div className="filter-option">
-        <div className="filter-title">
-        Who?
+        <div className="date-container">
+          <div className="date-header">From</div>
+          <DatePicker
+            value={dayjs(startDate)}
+            onAccept={(newStartDate) => {
+              setStartDate(newStartDate.format('YYYY-MM-DD'));
+            }}
+          />
+        </div>
+
+        <div className="date-container">
+          <div className="date-header">To</div>
+          <DatePicker
+            value={dayjs(endDate)}
+            onAccept={(newEndDate) => {
+              setEndDate(newEndDate.format('YYYY-MM-DD'));
+            }}
+          />
         </div>
       </div>
 
