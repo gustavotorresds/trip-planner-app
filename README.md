@@ -8,3 +8,5 @@ Allowing people to have their own travel assistants at no cost.
 * Receive an itinerary with flights, lodging, and activities
 * Tweak the suggested itinerary
 
+## Priority to-dos
+* Refactor CSS to be more sustainable, will get out of control soon

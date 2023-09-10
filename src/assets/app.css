@@ -152,3 +152,32 @@ a {
   font-size: 1em;
   margin-bottom: 0.5em;
 }
+
+.no-days-container {
+  width: 100%;
+}
+
+.individual-no-days-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1em 0;
+}
+
+.no-days-city {
+  flex: 1;
+  font-size: 1em;
+}
+
+.no-days-number-container {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: right;
+}
+
+.no-days-number {
+  padding: 0 1em;
+}

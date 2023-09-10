@@ -36,8 +36,8 @@ export const numberOfPeopleString = ({ numberOfPeople }) => {
   return `${numberOfPeople} ${numberOfPeople > 1 ? 'people' : 'person'}`
 }
 
-export const destinationCitiesString = ({ destinationCities }) => {
-  return destinationCities.map((dC) => dC.city).join(', ');
+export const destinationCitiesString = ({ destinations }) => {
+  return destinations.map((dC) => dC.city).join(', ');
 }
 
 export const cityFromString = ({ cityFrom }) => {

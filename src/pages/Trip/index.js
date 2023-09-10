@@ -8,6 +8,8 @@ import {
 import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 
@@ -64,11 +66,12 @@ const CityPicker = ({ initialCity, cityOptions, onCityPicked, isNewCity=false })
 }
 
 function SearchModal({ trip, onClose }) {
-  const [origin, setOrigin] = useState(trip.cityFrom);
-  const [destinations, setDestinations] = useState(trip.destinationCities.map(c => c.city));
-  const [startDate, setStartDate] = useState(trip.startDate);
-  const [endDate, setEndDate] = useState(trip.endDate);
+  // TODO: figure out best UX to set trip length. Currently, esp annoying if the trip is long. User has to click on -/+ a ton of times
   // TODO: figure out context/satte flow for this
+
+  const [origin, setOrigin] = useState(trip.cityFrom);
+  const [destinations, setDestinations] = useState(trip.destinations);
+  const [startDate, setStartDate] = useState(trip.startDate);
 
   return (
     <div className="filters-container">
@@ -100,12 +103,12 @@ function SearchModal({ trip, onClose }) {
         {destinations.map((destination, destinationIdx) =>
           <CityPicker
             key={`destination-picker-${destinationIdx}`}
-            initialCity={destination}
+            initialCity={destination.city}
             cityOptions={allCities.filter(c => c !== origin)}
             onCityPicked={(cityPicked) => {
               setDestinations([
                 ...destinations.slice(0, destinationIdx),
-                cityPicked,
+                {...destinations[destinationIdx], city: cityPicked},
                 ...destinations.slice(destinationIdx + 1),
               ]);
             }}
@@ -118,7 +121,7 @@ function SearchModal({ trip, onClose }) {
           onCityPicked={(cityPicked) => {
             setDestinations([
               ...destinations,
-              cityPicked,
+              {city: cityPicked, numberOfDays: 0},
             ]);
           }}
           isNewCity={true}
@@ -127,25 +130,14 @@ function SearchModal({ trip, onClose }) {
 
       <div className="filter-option">
         <div className="filter-title">
-        When?
+        When to start?
         </div>
 
         <div className="date-container">
-          <div className="date-header">From</div>
           <DatePicker
             value={dayjs(startDate)}
             onAccept={(newStartDate) => {
               setStartDate(newStartDate.format('YYYY-MM-DD'));
-            }}
-          />
-        </div>
-
-        <div className="date-container">
-          <div className="date-header">To</div>
-          <DatePicker
-            value={dayjs(endDate)}
-            onAccept={(newEndDate) => {
-              setEndDate(newEndDate.format('YYYY-MM-DD'));
             }}
           />
         </div>
@@ -154,6 +146,49 @@ function SearchModal({ trip, onClose }) {
       <div className="filter-option">
         <div className="filter-title">
         Days at each destination?
+        </div>
+
+        <div className="no-days-container">
+          {destinations.map((destination, destinationIdx) =>
+              <div className="individual-no-days-container">
+                <div className="no-days-city">
+                {destination.city}
+                </div>
+
+                <div className="no-days-number-container">
+                  <IconButton
+                    size="small"
+                    disabled={destination.numberOfDays < 1}
+                    onClick={(e) => {
+                      setDestinations([
+                        ...destinations.slice(0, destinationIdx),
+                        {...destinations[destinationIdx], numberOfDays: destination.numberOfDays - 1},
+                        ...destinations.slice(destinationIdx + 1),
+                      ]);
+                    }}
+                  >
+                    <RemoveIcon />
+                  </IconButton>
+
+                  <div className="no-days-number">
+                    {destination.numberOfDays}
+                  </div>
+
+                  <IconButton
+                    size="small"
+                    onClick={(e) => {
+                      setDestinations([
+                        ...destinations.slice(0, destinationIdx),
+                        {...destinations[destinationIdx], numberOfDays: destination.numberOfDays + 1},
+                        ...destinations.slice(destinationIdx + 1),
+                      ]);
+                    }}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </div>
+              </div>
+          )}
         </div>
       </div>
     </div>

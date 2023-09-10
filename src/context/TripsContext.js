@@ -18,7 +18,7 @@ export function TripsProvider({ children }) {
       startDate: '2023-08-20',
       endDate: '2023-08-27',
       cityFrom: 'Sao Paulo',
-      destinationCities: [
+      destinations: [
           { city: 'Miami', numberOfDays: 4 },
           { city: 'San Francisco', numberOfDays: 3 }
       ],
@@ -48,7 +48,7 @@ export function TripsProvider({ children }) {
       startDate: '2023-08-20',
       endDate: '2023-11-20',
       cityFrom: 'San Francisco',
-      destinationCities: [
+      destinations: [
           { city: 'Sao Paulo', numberOfDays: 4 },
           { city: 'Rio de Janeiro', numberOfDays: 3 }
       ],
