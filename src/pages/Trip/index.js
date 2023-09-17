@@ -65,7 +65,7 @@ const CityPicker = ({ initialCity, cityOptions, onCityPicked, isNewCity=false })
   </div>);
 }
 
-function SearchModal({ trip, onClose }) {
+function SearchModal({ trip, onClose, onUpdateSearch }) {
   // TODO: figure out best UX to set trip length. Currently, esp annoying if the trip is long. User has to click on -/+ a ton of times
   // TODO: figure out context/satte flow for this
 
@@ -191,17 +191,34 @@ function SearchModal({ trip, onClose }) {
           )}
         </div>
       </div>
+
+      <div className="footer">
+        <div
+          className="footer-button"
+          onClick={() => onUpdateSearch({
+            cityFrom: origin,
+            startDate: startDate,
+            destinations: destinations,
+          })}
+        >
+        Search
+        </div>
+      </div>
     </div>
     );
 }
 
 function Trip() {
   const { tripId, } = useParams();
-  const { trips, isLoading } = useTrips();
+  const { trips, isLoading, patchTripItinerary } = useTrips();
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleUpdate = (updatedData) => {
+    patchTripItinerary(tripId, updatedData);
+    setOpen(false);
+  }
   
   const trip = trips.find(({ _id }) => _id === tripId);
 
@@ -228,7 +245,7 @@ function Trip() {
                 scroll="body"
               >
                 <>
-                  <SearchModal trip={trip} onClose={handleClose} />
+                  <SearchModal trip={trip} onClose={handleClose} onUpdateSearch={handleUpdate} />
                 </>
               </Dialog>
 
