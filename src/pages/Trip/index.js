@@ -21,8 +21,6 @@ import {
   itineraryItemSummaryDescription,
 } from '../../utils';
 
-const allCities = ['New York', 'San Francisco', 'Sao Paulo', 'Rio de Janeiro', 'Paris', 'Amsterdam', 'Salvador', 'Miami'];
-
 const CityPicker = ({ initialCity, cityOptions, onCityPicked, isNewCity=false }) => {
   // TODO: should deal w the case when the user ends up picking nothing. The city should then reset to initialCity
 
@@ -65,7 +63,10 @@ const CityPicker = ({ initialCity, cityOptions, onCityPicked, isNewCity=false })
 
 function SearchModal({ trip, onClose, onUpdateSearch }) {
   // TODO: figure out best UX to set trip length. Currently, esp annoying if the trip is long. User has to click on -/+ a ton of times
-  // TODO: figure out context/satte flow for this
+
+  // TODO: grabbing list of cities works, but will prob need to be refactored
+  const { destinations: allDestinations } = useTrips();
+  const allCities = allDestinations.map((c) => c.name); // Convert to array of destination names to use in CityPickers
 
   const [origin, setOrigin] = useState(trip.cityFrom);
   const [destinations, setDestinations] = useState(trip.destinations);
@@ -208,7 +209,7 @@ function SearchModal({ trip, onClose, onUpdateSearch }) {
 
 function Trip() {
   const { tripId, } = useParams();
-  const { trips, isLoading, patchTripItinerary } = useTrips();
+  const { trips, isLoading, patchTripItinerary, } = useTrips();
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
