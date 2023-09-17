@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 
-import '../../assets/app.css';
 import { useTrips } from '../../context/TripsContext.js';
 import { tripTitle, tripDateString } from '../../utils';
 

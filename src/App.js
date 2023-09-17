@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import logo from './logo.svg';
 import './App.css';
+import './assets/app.scss';
 import Home from './pages/Home';
 import Trip from './pages/Trip';
 

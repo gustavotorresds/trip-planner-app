@@ -1,5 +1,3 @@
-import '../../assets/app.css';
-
 import { useState } from 'react';
 import {
   useParams
@@ -148,14 +146,14 @@ function SearchModal({ trip, onClose, onUpdateSearch }) {
         Days at each destination?
         </div>
 
-        <div className="no-days-container">
+        <div className="num-days-container">
           {destinations.map((destination, destinationIdx) =>
-              <div key={`number-of-days-${destinationIdx}`} className="individual-no-days-container">
-                <div className="no-days-city">
+              <div key={`number-of-days-${destinationIdx}`} className="destination-num-days-container">
+                <div className="destination-num-days-city">
                 {destination.city}
                 </div>
 
-                <div className="no-days-number-container">
+                <div className="destination-num-days-number-container">
                   <IconButton
                     size="small"
                     disabled={destination.numberOfDays < 1}
@@ -170,7 +168,7 @@ function SearchModal({ trip, onClose, onUpdateSearch }) {
                     <RemoveIcon />
                   </IconButton>
 
-                  <div className="no-days-number">
+                  <div className="destination-num-days-number">
                     {destination.numberOfDays}
                   </div>
 
@@ -234,7 +232,7 @@ function Trip() {
             </div>
 
             <div className="page">
-              <div className="query-summary" onClick={handleOpen}>
+              <div className="search-query" onClick={handleOpen}>
                 {destinationCitiesString(trip)} • {tripDateString(trip)} • {numberOfPeopleString(trip)}
               </div>
 
@@ -249,7 +247,7 @@ function Trip() {
                 </>
               </Dialog>
 
-              <div className="overall-itinerary">
+              <div className="itinerary-contaner">
                 {trip.itinerary.map((dayItinerary, dayIdx) =>
                   <div className="day-itinerary" key={`day-${dayIdx}`}>
                     <div className="date">
