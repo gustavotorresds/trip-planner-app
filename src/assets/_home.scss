@@ -1,0 +1,17 @@
+.home {
+  padding-top: 1.5em;
+
+  .trip-card {
+    padding: 1em 0;
+  }
+
+  .trip-title {
+    font-weight: bold;
+    font-size: $text-base;
+    margin-bottom: 0.4em;
+  }
+
+  .trip-dates {
+    font-size: $text-base;
+  }
+}

@@ -1,0 +1,158 @@
+.trip {
+  .header {
+    border-bottom: 1px solid grey;
+    padding: 1.5em 0 0.5em 0;
+    justify-content: center;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.25em;
+  }
+
+  .search-query {
+    background-color: #f2f2f2;
+    padding: 1em;
+    font-size: 0.8em;
+  }
+}
+
+.itinerary-container {
+  margin-top: 1em;
+}
+
+.day-itinerary {
+  margin-bottom: 1em;
+
+  &-item {
+    padding: 0.5em 0;
+  }
+
+  .date {
+    font-weight: bold;
+    font-size: $text-base;
+    padding: 1em 0;
+  }
+}
+
+.filters-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: scroll;
+  padding: 2em 2em;
+  padding-bottom: 10em;
+}
+
+.filters-header {
+  justify-content: left;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+// Modal Content
+.filter-option {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  width: 90%;
+  padding: 1.5em 1em;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 0.5em;
+  text-align: left;
+  outline: none; // Remove the default focus outline
+  margin-bottom: 1em;
+
+  .filter-title {
+    font-weight: bold;
+    font-size: 1.4em;
+  }
+
+  // Text Box
+  .text-input {
+    margin-top: 1.2em;
+    padding: 1em;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none; // Remove the default focus outline
+    transition: border-color 0.3s ease-in-out;
+
+    // Hover Effect
+    &:hover {
+      border-color: #666;
+    }
+
+    // Focus Effect
+    &:focus {
+      border-color: #007bff;
+    }
+  }
+}
+
+.footer {
+  background-color: #fff;
+  border-top: 1px #DEDEDE solid;
+  color: white;
+  padding: 1em;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: right;
+}
+
+.footer-button {
+  background-color: #005AC1;
+  padding: 0.8em 2em;
+  border-radius: 0.2em;
+  margin-right: 1em;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.destination-container {
+  display: flex;
+  flex-direction: column;
+
+  // City Options
+  .city-option {
+    padding: 1em 0.3em;
+
+    &:hover {
+      background-color: #f2f2f2;
+    }
+  }
+}
+
+.date-container {
+  width: 100%;
+  margin: 0.5em 0;
+}
+
+.num-days-container {
+  width: 100%;
+}
+
+.destination-num-days-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1em 0;
+
+  .destination-num-days-city {
+    flex: 1;
+    font-size: $text-base;
+  }
+
+  .destination-num-days-number-container {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
+
+    .destination-num-days-number {
+      padding: 0 1em;
+    }
+  }
+}
