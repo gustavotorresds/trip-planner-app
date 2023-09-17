@@ -181,3 +181,24 @@ a {
 .no-days-number {
   padding: 0 1em;
 }
+
+.footer {
+  background-color: #fff;
+  border-top: 1px #DEDEDE solid;
+  color: white;
+  padding: 1em;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: right;
+}
+
+.footer-button {
+  background-color: #005AC1;
+  padding: 0.8em 2em;
+  border-radius: 0.2em;
+  margin-right: 1em;
+  font-size: 1.2em;
+  font-weight: bold;
+}
