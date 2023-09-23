@@ -19,6 +19,7 @@ export function useTrips() {
 
 export function TripsProvider({ children }) {
   const [trips, setTrips] = useState([]);
+  const [destinations, setDestinations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const patchTripItinerary = (tripId, updatedData) => {
@@ -50,9 +51,10 @@ export function TripsProvider({ children }) {
 
   useEffect(() => {
     setIsLoading(true);
-    let url = 'http://localhost:5050/api/trips';
+    
+    const tripsURL = 'http://localhost:5050/api/trips';
     axios
-      .get(url)
+      .get(tripsURL)
       .then((response) => {
         setTrips(response.data);
         setIsLoading(false);
@@ -61,10 +63,21 @@ export function TripsProvider({ children }) {
         console.log(error)
         setIsLoading(false);
       });
+
+    // TODO: should probably connect isLoading here
+    const destinationsURL = 'http://localhost:5050/api/destinations';
+    axios
+      .get(destinationsURL)
+      .then((response) => {
+        setDestinations(response.data);
+      })
+      .catch((error) => {
+        console.log(error)
+      });
   }, []);
 
   return (
-    <TripsContext.Provider value={{ trips, isLoading, patchTripItinerary}}>
+    <TripsContext.Provider value={{ isLoading, trips, patchTripItinerary, destinations}}>
       {children}
     </TripsContext.Provider>
   );
